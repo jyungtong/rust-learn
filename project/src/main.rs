@@ -9,20 +9,18 @@ struct TodoItem {
     content: String,
 }
 
+fn create_todo_item(title: &str, content: &str) -> TodoItem {
+    TodoItem {
+        title: title.to_string(),
+        content: content.to_string(),
+    }
+}
+
 fn main() {
     let mut todos: Vec<TodoItem> = Vec::new();
-    todos.push(TodoItem {
-        title: "learn rust".to_string(),
-        content: "read rust book".to_string(),
-    });
-    todos.push(TodoItem {
-        title: "work".to_string(),
-        content: "do something".to_string(),
-    });
-    todos.push(TodoItem {
-        title: "play".to_string(),
-        content: "what game".to_string(),
-    });
+    todos.push(create_todo_item("learn rust", "read rust book"));
+    todos.push(create_todo_item("work", "do something"));
+    todos.push(create_todo_item("play", "what game"));
 
     let mut inputs: Vec<String> = Vec::new();
     let args: Vec<String> = std::env::args().collect();
