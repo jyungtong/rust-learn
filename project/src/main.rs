@@ -4,11 +4,25 @@
 //     println!("{}", &s[..4]);
 // }
 
+struct TodoItem {
+    title: String,
+    content: String,
+}
+
 fn main() {
-    let mut todos: Vec<String> = Vec::new();
-    todos.push(String::from("learn rust"));
-    todos.push(String::from("work"));
-    todos.push(String::from("play"));
+    let mut todos: Vec<TodoItem> = Vec::new();
+    todos.push(TodoItem {
+        title: "learn rust".to_string(),
+        content: "read rust book".to_string(),
+    });
+    todos.push(TodoItem {
+        title: "work".to_string(),
+        content: "do something".to_string(),
+    });
+    todos.push(TodoItem {
+        title: "play".to_string(),
+        content: "what game".to_string(),
+    });
 
     let mut inputs: Vec<String> = Vec::new();
     let args: Vec<String> = std::env::args().collect();
@@ -79,7 +93,7 @@ fn main() {
 
         "l" | "list" => {
             for todo in todos {
-                println!("todo title: {}", todo);
+                println!("todo title: {}, content: {}", todo.title, todo.content);
             }
         }
 
