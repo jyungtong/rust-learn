@@ -1,6 +1,6 @@
+use clap::Subcommand;
 use serde::{Deserialize, Serialize};
 use serde_json;
-use clap::Subcommand;
 
 #[derive(Deserialize, Serialize)]
 pub struct TodoItem {
@@ -10,8 +10,13 @@ pub struct TodoItem {
 
 #[derive(Debug, Clone, Subcommand)]
 pub enum TodoCommand {
-    Create,
-    List
+    Create {
+        #[arg(short, long)]
+        title: String,
+        #[arg(short, long)]
+        content: String,
+    },
+    List,
 }
 
 impl TodoItem {
