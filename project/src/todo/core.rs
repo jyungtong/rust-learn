@@ -1,10 +1,17 @@
 use serde::{Deserialize, Serialize};
 use serde_json;
+use clap::Subcommand;
 
 #[derive(Deserialize, Serialize)]
 pub struct TodoItem {
     pub title: String,
     pub content: String,
+}
+
+#[derive(Debug, Clone, Subcommand)]
+pub enum TodoCommand {
+    Create,
+    List
 }
 
 impl TodoItem {
