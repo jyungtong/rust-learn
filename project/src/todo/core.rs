@@ -12,9 +12,9 @@ pub struct TodoItem {
 pub enum TodoCommand {
     Create {
         #[arg(short, long)]
-        title: String,
+        title: Option<String>,
         #[arg(short, long)]
-        content: String,
+        content: Option<String>,
     },
     List,
 }
