@@ -16,7 +16,12 @@ pub enum TodoCommand {
         #[arg(short, long)]
         content: Option<String>,
     },
-    List,
+    List {
+        #[arg(short, long)]
+        title: Option<String>,
+        #[arg(short, long)]
+        content: Option<String>,
+    },
 }
 
 impl TodoItem {
@@ -48,4 +53,68 @@ pub fn get_todo_list() -> Vec<TodoItem> {
     todos.push(create_todo_item("play", "what game"));
 
     return todos;
+}
+
+pub struct TodoItemFilter {
+    pub title: Option<String>,
+    pub content: Option<String>,
+}
+
+impl TodoItemFilter {
+    pub fn new() -> Self {
+        Self {
+            title: Option::None,
+            content: Option::None,
+        }
+    }
+
+    // 1st generic option
+    pub fn set_title<T: Into<String>>(&mut self, title: T) {
+        self.title = Some(title.into());
+    }
+
+    pub fn set_content<T: Into<String>>(&mut self, content: T) {
+        self.content = Some(content.into());
+    }
+
+    // 2nd generic option
+    // pub fn set_title<T>(&mut self, title: T) where T: Into<String> {
+    //     self.title = Some(title.into());
+    // }
+    //
+    // pub fn set_content<T>(&mut self, content: T) where T: Into<String> {
+    //     self.content = Some(content.into());
+    // }
+
+    pub fn filter(&self, list: &Vec<TodoItem>) {
+        let mut filterd_list = Vec::<&TodoItem>::new();
+
+        if self.title.is_none() && self.content.is_none() {
+            for item in list {
+                filterd_list.push(item);
+            }
+        } else {
+            for item in list {
+                let mut flag: (bool, bool) = (false, false);
+
+                flag.0 = match &self.title {
+                    Some(title) => item.title.contains(title),
+                    _ => true,
+                };
+
+                flag.1 = match &self.content {
+                    Some(content) => item.content.contains(content),
+                    _ => true,
+                };
+
+                if flag.0 && flag.1 {
+                    filterd_list.push(item);
+                }
+            }
+        }
+
+        for item in filterd_list {
+            println!("todo title: {}, content: {}", item.title, item.content);
+        }
+    }
 }
